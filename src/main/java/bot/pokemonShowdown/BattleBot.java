@@ -26,13 +26,7 @@ public class BattleBot {
 		return bots.get(gameCode);
 	}
 	
-	public void setJSON(JSONObject o) {
-		data=o;
-	}
-	
-	public String makeMove() {
-		//Extend the class and override this!
-		
+	public String makeMove(Game g) {
 		return "";
 	}
 }

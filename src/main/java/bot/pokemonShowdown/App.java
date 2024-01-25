@@ -8,25 +8,28 @@ import java.util.Scanner;
  */
 public class App 
 {
-	public static ShowdownSocket s;
-    public static void main( String[] args )
-    {
-    	Scanner scanner = new Scanner(System.in);
-    	while(scanner.hasNext()) {
-    		if(scanner.nextLine().equalsIgnoreCase("start")) {
-    	    	s = new ShowdownSocket();
-    		}
-    		if(scanner.nextLine().equalsIgnoreCase("close")) {
-    			s.quit();
-    		}
-    		if(scanner.nextLine().equalsIgnoreCase("newGame")) {
-    			System.out.println("newGame?");
-    			s.newGame();
-    		}
-    		if(scanner.nextLine().equalsIgnoreCase("quit")) {
-    			s.quit();
-    			return;
-    		}
-    	}
-    }
+	public static ShowdownSocket socket;
+	public static void main( String[] args )
+	{
+		Scanner scanner = new Scanner(System.in);
+		while(scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			if(line.equalsIgnoreCase("start")) {
+				socket = ShowdownSocket.getShowdownSocketSingleton();
+				socket.start();
+			}
+			else if(line.equalsIgnoreCase("close")) {
+				socket.quit();
+			}
+			else if(line.equalsIgnoreCase("newGame")) {
+				System.out.println("newGame?");
+				socket.newGame();
+			}
+			else if(line.equalsIgnoreCase("quit")) {
+				socket.quit();
+				scanner.close();
+				return;
+			}
+		}
+	}
 }
