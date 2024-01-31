@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class MessageSanitizer {
 	public static void processMessage(String message) {
-		System.out.println("PROCESSING MESSAGE: "+message);
 		String prefix=message.substring(0,Math.min(100, message.length()));
+		System.out.println("PROCESSING MESSAGE: "+prefix);
 		Object[] objectArray = Game.games.keySet().toArray();
 		String[] gameKeys = Arrays.copyOf(objectArray, objectArray.length, String[].class);
 		for(String k:gameKeys) {

@@ -67,41 +67,33 @@ public class Game {
 	private void parseTurn(JSONObject turnData) {
 		System.out.println("Parsing TURN!");
 		JSONObject activeJSON = turnData.getJSONArray("active").getJSONObject(0);
-		if(sideActive==null) { //If first time:
-			//TODO: Do something with activeJSON
-		}
-		else {
-			//TODO: Update active pokemon with activeJSON
-		}
 		JSONObject sideJSON = turnData.getJSONObject("side");
 		System.out.println(sideJSON.toString());
 		JSONArray pokemonArray = sideJSON.getJSONArray("pokemon");
 		System.out.println(sideList.length);
 		if(sideList.length==0||sideList[0]==null) { //First time:
-			System.out.println(pokemonArray.toString());
+			System.out.println("POKEMON ARRAY: "+pokemonArray.toString());
+			System.out.println("POKEMON ARRAY LENGTH: "+pokemonArray.length());
+			sideActive=Pokemon.createPokemon(pokemonArray.getJSONObject(0));
 			for(int i=0; i<pokemonArray.length(); i++) {
-				//Setting sideActive to NOT NULL for testing purposes.
-				if(i==0) {
-					sideActive=Pokemon.createPokemon(pokemonArray.getJSONObject(i));
-				}
-				
 				sideList[i] = Pokemon.createPokemon(pokemonArray.getJSONObject(i));
 			}
+			//TODO: Do something with activeJSON
 		}
 		else {
 			for(int i=0; i<pokemonArray.length(); i++) {
 				JSONObject pokemon = pokemonArray.getJSONObject(i);
-				//TODO: Update sideList[i] with pokemon
+				sideList[i].updatePokemon(pokemon);
 			}
+			//TODO: Update active pokemon with activeJSON
 		}
-
-		if(sideActive!=null) {
-			System.out.println("Side Active: "+sideActive);
-			System.out.println("Side List: "+Arrays.toString(sideList));
+		// If activeJSON todos for firsttime and subsequent are same, move code here.
+		if(sideActive==null) {
+			System.out.println("Game::parseTurn() sideActive is null - Something went totally wrong");
+			return;
 		}
-		else {
-			System.out.println("Game::parseTurn() Something went totally wrong...");
-		}
+		System.out.println("Side Active: "+sideActive);
+		System.out.println("Side List: "+Arrays.toString(sideList));
 	}
 	
 }
